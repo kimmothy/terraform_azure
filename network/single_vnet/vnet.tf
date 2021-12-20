@@ -7,6 +7,7 @@ resource "azurerm_virtual_network" "single_vnet" {
     tags = var.tags
 }
 
+#vnet-lg-groupware-prod
 resource "azurerm_subnet" "subnets" {
     count                = length(var.subnet_list)
     name                 = "${var.subnet_list[count.index]}Subnet"
@@ -15,6 +16,7 @@ resource "azurerm_subnet" "subnets" {
     address_prefixes     = [cidrsubnet(var.vnet_cidr, 4, count.index)]
 }
 
+
 resource "azurerm_virtual_network_peering" "peer_from_here" {
     count                     = length(var.vnet_peering_list)
     name                      = "peer-${var.identifier}_${var.environment}-to-${var.vnet_peering_list[count.index][3]}"
@@ -22,7 +24,7 @@ resource "azurerm_virtual_network_peering" "peer_from_here" {
     virtual_network_name      = azurerm_virtual_network.single_vnet.name
     remote_virtual_network_id = var.vnet_peering_list[count.index][1]
     allow_forwarded_traffic   = true
-    }
+}
 
 
 resource "azurerm_virtual_network_peering" "peer_from_there" {
