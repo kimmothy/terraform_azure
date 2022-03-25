@@ -29,7 +29,7 @@ variable "subnet_list" {
 }
 
 variable "vnet_peering_list" {
-    type = list(list(string))
+    type = list(any)
     default = []
     description = "map of other vnets which should be peerd with this vnet. Each inner list is one vnet information"
 }
